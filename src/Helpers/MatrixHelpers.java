@@ -24,11 +24,12 @@ public class MatrixHelpers {
     }
 
     public static void printMatrix(int[][] matrix,int line, int columns){
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < line; i++) {
+            for (int j = 0; j < columns; j++) {
                 System.out.println(matrix[i][j]);
             }
         }
     }
+
 
 }
