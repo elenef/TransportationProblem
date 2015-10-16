@@ -2,43 +2,45 @@ package TransportationProblem;
 
 import Helpers.ArrayHelpers;
 import Helpers.MatrixHelpers;
-import com.sun.org.apache.xpath.internal.SourceTree;
 
 public class TransportTable {
-    int[] inventory = {100, 50, 60};
-    int[] orders = {70, 80, 50};
+    int[] inventory, orders;
     int[][] delivery, rates;
+
+    public TransportTable(int[] _inventory, int[] _orders) {
+        inventory = _inventory;
+        orders = _orders;
+
+        rates = MatrixHelpers.create(inventory.length, orders.length);
+        MatrixHelpers.fillRandomly(rates);
+
+        delivery = MatrixHelpers.create(inventory.length, orders.length);
+    }
 
     public int[][] getDelivery() {
         return delivery;
     }
 
-    public TransportTable() {
-        rates = MatrixHelpers.RandomMatrix(3, 3);
-    }
 
     public void isClosed() {
         int sumInventory = ArrayHelpers.sum(inventory);
         int sumOrders = ArrayHelpers.sum(orders);
 
-        if (sumInventory > sumOrders) {
+        if (ArrayHelpers.sum(inventory) > ArrayHelpers.sum(orders)) {
             orders = ArrayHelpers.push(orders, sumInventory - sumOrders);
-            delivery = MatrixHelpers.createMatrix(3, 4);
-        }
-
-        else if (sumInventory < sumOrders) {
-            inventory = ArrayHelpers.push(inventory, sumInventory - sumOrders);
-            delivery =  MatrixHelpers.createMatrix(4, 3);
-        }
-        else{
-            delivery =  MatrixHelpers.createMatrix(3, 3);
+            delivery = MatrixHelpers.expand(delivery, true);
+            rates =  MatrixHelpers.expand(rates, true);
+        } else {
+            inventory = ArrayHelpers.push(inventory, sumOrders - sumInventory);
+            delivery = MatrixHelpers.expand(delivery, false);
+            rates =  MatrixHelpers.expand(rates, false);
         }
     }
 
 
     public void fillDeliveries() {
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 4; j++) {
+        for (int i = 0; i < delivery.length; i++)
+            for (int j = 0; j < delivery[0].length; j++) {
                 if (orders[j] < inventory[i]) {
                     delivery[i][j] = orders[j];
                     inventory[i] -= orders[j];
@@ -54,7 +56,6 @@ public class TransportTable {
                     delivery[i][j] = inventory[i];
                     inventory[i] = 0;
                     orders[j] = 0;
-
                 }
 
             }
