@@ -10,5 +10,7 @@ public class Interface {
         table.isClosed();
         table.fillDeliveries();
         MatrixHelpers.print(table.getDelivery());
+        MatrixHelpers.print(table.getRates());
+        System.out.println(table.getTransportationCosts());
     }
 }

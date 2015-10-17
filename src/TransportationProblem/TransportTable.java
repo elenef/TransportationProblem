@@ -6,6 +6,7 @@ import Helpers.MatrixHelpers;
 public class TransportTable {
     int[] inventory, orders;
     int[][] delivery, rates;
+    int transportationCosts = 0;
 
     public TransportTable(int[] _inventory, int[] _orders) {
         inventory = _inventory;
@@ -19,6 +20,19 @@ public class TransportTable {
 
     public int[][] getDelivery() {
         return delivery;
+    }
+
+    public int[][] getRates() {
+        return rates;
+    }
+
+    public int getTransportationCosts() {
+        for(int i = 0; i<inventory.length; i++){
+            for(int j = 0; j<orders.length; j++){
+                transportationCosts += delivery[i][j]*rates[i][j];
+            }
+        }
+        return transportationCosts;
     }
 
 
