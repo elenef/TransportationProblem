@@ -1,3 +1,4 @@
+import Helpers.ArrayHelpers;
 import Helpers.MatrixHelpers;
 import TransportationProblem.TransportTable;
 
@@ -9,8 +10,13 @@ public class Interface {
         TransportTable table = new TransportTable(inventory,orders);
         table.isClosed();
         table.fillDeliveries();
+        table.BasicCells();
+        //table.isDegeneratePlan();
         MatrixHelpers.print(table.getDelivery());
         MatrixHelpers.print(table.getRates());
-        System.out.println(table.getTransportationCosts());
+        ArrayHelpers.print(table.getBasicCells());
+        //System.out.println("Add cell");
+        //ArrayHelpers.print(table.getPosZeroBasic());
+        System.out.println(table.getCosts());
     }
 }

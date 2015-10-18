@@ -49,5 +49,30 @@ public class MatrixHelpers {
         return result;
     }
 
+    public static int[] findValue(int[][] matrix, int value){
+        int[] result = ArrayHelpers.createArray(2);
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if(matrix[i][j] == value){
+                    result[0] = i;
+                    result[1] = j;
+                }
+            }
+        }
+        return result;
+    }
+
+    public static int numberBasicCells(int[][] delivery){
+        int count = 0;
+        for (int i = 0; i < delivery.length; i++) {
+            for (int j = 0; j < delivery[0].length; j++) {
+                if(delivery[i][j]>0){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
 
 }
