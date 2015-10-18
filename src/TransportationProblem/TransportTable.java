@@ -58,7 +58,7 @@ public class TransportTable {
             orders = ArrayHelpers.push(orders, sumInventory - sumOrders);
             delivery = MatrixHelpers.expand(delivery, true);
             rates = MatrixHelpers.expand(rates, true);
-        } else {
+        } else if(ArrayHelpers.sum(inventory) < ArrayHelpers.sum(orders)){
             inventory = ArrayHelpers.push(inventory, sumOrders - sumInventory);
             delivery = MatrixHelpers.expand(delivery, false);
             rates = MatrixHelpers.expand(rates, false);
@@ -73,7 +73,7 @@ public class TransportTable {
                     delivery[i][j] = orders[j];
                     inventory[i] -= orders[j];
                     orders[j] = 0;
-                    j++;
+
                 }
                 if (orders[j] > inventory[i]) {
                     delivery[i][j] = inventory[i];
@@ -91,7 +91,6 @@ public class TransportTable {
     }
 
 
-
     public void BasicCells() {
         basicCells = ArrayHelpers.createArray(MatrixHelpers.numberBasicCells(delivery));
         int count = 0;
@@ -104,7 +103,6 @@ public class TransportTable {
             }
         }
     }
-/*
     public boolean isCycle(int row, int coll, int[] values, int count, int oneRow, int twoColl) {
         int[] position;
 
@@ -130,19 +128,18 @@ public class TransportTable {
 
     public void isDegeneratePlan() {
         if (getBasicCells().length < inventory.length + orders.length - 1) {
-            for (int i = 0; i < delivery.length; i++) {
+            exit:for (int i = 0; i < delivery.length; i++) {
                 for (int j = 0; j < delivery[0].length; j++) {
                     if(delivery[i][j] == 0){
                         if(!(isCycle(i,j,getBasicCells(),0,0,0))){
-                            basicCells = ArrayHelpers.push(getBasicCells(),delivery[i][j]);
                             posZeroBasic[0] = i;
                             posZeroBasic[1] = j;
+                            basicCells = ArrayHelpers.push(getBasicCells(),delivery[i][j]);break exit;
                         }
                     }
                 }
             }
         }
     }
-*/
 
 }
